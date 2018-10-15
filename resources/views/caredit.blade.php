@@ -36,6 +36,44 @@
             <input type="text" class="form-control" name="price" value="{{$car->price}}">
           </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+              <p>Employees:</p>
+              @foreach ($employees as $emp)
+                {{-- <option value="{{ $emp->id }}">{{ $emp->name }}</option> --}}
+                <label for="emps[]" class="container">
+                  <input type="checkbox" name="emps[]" value={{$emp->id}}
+                  @if (in_array($emp->id, $car->employee_ids))
+                      checked="checked"
+                  @endif
+                  >
+                    {{$emp->name}}
+                </label>
+              @endforeach
+            </div>
+          </div>
+  
+          <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+              <p>Components:</p>
+              @foreach ($components as $comp)
+                {{-- <option value="{{ $emp->id }}">{{ $emp->name }}</option> --}}
+                <label for="comps[]" class="container">
+                  <input type="checkbox" name="comps[]" value={{$comp->id}}
+                  @if (in_array($comp->id, $car->component_ids))
+                      checked="checked"
+                  @endif
+                  >
+                    {{$comp->name}}
+                </label>
+              @endforeach
+            </div>
+          </div>
+
+
         <div class="row">
           <div class="col-md-4"></div>
           <div class="form-group col-md-4">
