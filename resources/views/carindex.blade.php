@@ -21,6 +21,8 @@
         <th>Model</th>
         <th>Price</th>
         <th>Employees</th>
+        <th>Components</th>
+
         <th colspan="2">Action</th>
       </tr>
     </thead>
@@ -33,9 +35,16 @@
         <td>{{$car->model}}</td>
         <td>{{$car->price}}</td>
         <td>
-          @foreach ($car->emps as $emp)
+          @foreach ($car->employees as $emp)
               {{$emp->name}}<br>
           @endforeach
+        </td>
+        <td>
+          {{-- @if ($car->comps) --}}
+            @foreach ($car->components as $comp)
+              {{$comp->name}}<br>
+            @endforeach
+          {{-- @endif --}}
         </td>
         <td><a href="{{action('CarController@edit', $car->id)}}" class="btn btn-warning">Edit</a></td>
         <td>

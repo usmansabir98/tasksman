@@ -23,3 +23,7 @@ Route::delete('{id}','CarController@destroy');
 Route::get('empadd','EmployeesController@create');
 Route::post('empadd','EmployeesController@store');
 Route::get('emp','EmployeesController@index');
+
+Route::get('compadd','ComponentController@create');
+Route::post('compadd','ComponentController@store');
+Route::get('comp','ComponentController@index');

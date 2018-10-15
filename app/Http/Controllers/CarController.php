@@ -5,30 +5,44 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Car;
 use App\Employee;
+use App\Component;
 
 class CarController extends Controller
 {
     public function create()
     {
         $emps = Employee::all();
-        return view('carcreate')->with('emps', $emps);
+        $comps = Component::all();
+
+        return view('carcreate')->with('emps', $emps)->with('comps', $comps);
     }
 
     public function store(Request $request)
     {
-        $emps = Employee::all();
+
+        $empIds = $request->get('emps');
+        $emps = Employee::whereIn('_id', $empIds)->get();
+
+        // dd($emps);
+        $compIds = $request->get('comps');
+        $comps = Component::whereIn('_id', $compIds)->get();
+
         $car = new Car();
         $car->carcompany = $request->get('carcompany');
         $car->model = $request->get('model');
         $car->price = $request->get('price');
         // DB::connection('mongodb')->collection('cars')->get();  
         $car->employees()->attach($emps);
+        $car->components()->attach($comps);
 
         $car->save();
 
         // $car = Car::find($car->id);
         foreach($emps as $emp){
             $emp->cars()->attach(array($car->id));
+        }
+        foreach($comps as $comp){
+            $comp->cars()->attach(array($car->id));
         }
         // print_r($car);
        
@@ -37,26 +51,10 @@ class CarController extends Controller
 
     public function index()
     {
-        // $cars=Car::all();
-        $query = Car::with('employees');
+        $query = Car::with(['employees', 'components']);
         $cars = $query->get();
-        // $cars=Car::with('employees');
 
-        // var_dump($cars->first()->employees());
-        foreach($cars as $car){
-            $employee_ids = $car->employee_ids;
-            // $id = new \MongoDB\BSON\ObjectID($employee_ids[0]);
-            // var_dump($id);
-            // print_r($employee_ids); echo "<br>";
-            $employees = Employee::whereIn('_id', $employee_ids)->get();
-            //var_dump($employees); echo "<br><br>";
-            // echo '<pre>';
-            // print_r($employees);
-            $car->emps = $employees;
-        }
-
-        return view('carindex',compact('cars'));
-        // var_dump($cars);
+        return view('carindex')->with('cars', $cars);
     }
 
     public function edit($id)

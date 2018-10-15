@@ -17,31 +17,26 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>Name</th>
-        <th>Email</th>
+        <th>Component Name</th>
+        <th>Specification</th>
         <th>Cars</th>
-        
       </tr>
     </thead>
     <tbody>
       
-      @foreach($emps as $emp)
+      @foreach($comps as $comp)
       <tr>
-        <td>{{$emp->id}}</td>
-        <td>{{$emp->name}}</td>
-        <td>{{$emp->email}}</td>
+        <td>{{$comp->id}}</td>
+        <td>{{$comp->name}}</td>
+        <td>{{$comp->specification}}</td>
         <td>
-          @foreach ($emp->cars as $car)
+          @foreach ($comp->cars as $car)
               {{$car->model}}<br>
-              {{-- {{var_dump($car->components)}} --}}
-              @foreach ($car->components as $comp)
-                --{{$comp->name}}<br>
-              @endforeach
-              <br>
+                @foreach ($car->employees as $emp)
+                  --{{$emp->name}}<br>
+                @endforeach
           @endforeach
         </td>
-
-        
       </tr>
       @endforeach
     </tbody>

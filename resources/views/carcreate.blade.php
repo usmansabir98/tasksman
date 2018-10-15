@@ -39,13 +39,28 @@
         <div class="row">
           <div class="col-md-4"></div>
           <div class="form-group col-md-4">
-            <label for="emp">Employee:</label>
-            <select name="emp" id="emp" class="form-control">
-              <option value="" disabled selected>Select</option>
-              @foreach ($emps as $emp)
-                  <option value="{{ $emp->id }}">{{ $emp->name }}</option>
-              @endforeach
-          </select>
+            <p>Employees:</p>
+            @foreach ($emps as $emp)
+              {{-- <option value="{{ $emp->id }}">{{ $emp->name }}</option> --}}
+              <label for="emps[]" class="container">
+                <input type="checkbox" name="emps[]" value={{$emp->id}}>
+                  {{$emp->name}}
+              </label>
+            @endforeach
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="form-group col-md-4">
+            <p>Components:</p>
+            @foreach ($comps as $comp)
+              {{-- <option value="{{ $emp->id }}">{{ $emp->name }}</option> --}}
+              <label for="comps[]" class="container">
+                <input type="checkbox" name="comps[]" value={{$comp->id}}>
+                  {{$comp->name}}
+              </label>
+            @endforeach
           </div>
         </div>
 
